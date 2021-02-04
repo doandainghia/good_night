@@ -5,6 +5,7 @@
 - go into project after clone: cd good_night
 - install libraries command: bundle install
 - init database command: rails db:setup
+- after init datdabase. There are 10 user records was created.
 - run server command: rails s
 
 ## API list:
