@@ -34,7 +34,6 @@ module Api
         else
           render json: { success: false, errors: operation_history.errors }
         end
-
       end
 
       def follow
