@@ -7,6 +7,7 @@
 - init database command: rails db:setup
 - after init datdabase. There are 10 user records was created.
 - run server command: rails s
+- run test command: rspec
 
 ## API list:
 - GET /api/v1/users/:user_id/operation_histories
