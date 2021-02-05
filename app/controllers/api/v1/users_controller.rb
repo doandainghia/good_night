@@ -25,9 +25,8 @@ module Api
       end
 
       def record_wakeup_at
-        now = Time.current
-        operation_history = @current_user.operation_histories.find(params[:operation_history_id])
-        operation_history.assign_attributes wakeup_at: now, distance_time: (now - operation_history.sleep_at)
+        operation_history = @current_user.operation_histories.find params[:operation_history_id]
+        operation_history.assign_attributes wakeup_at: Time.current
 
         if operation_history.save
           render json: { success: true, data: OperationHistorySerializer.new(operation_history) }
@@ -48,10 +47,10 @@ module Api
 
       def unfollow
         if @current_user.following? params[:other_user_id]
-          @current_user.relationships.find_by(followed_id: other_user_id).destroy
+          @current_user.relationships.find_by(followed_id: params[:other_user_id]).destroy
           render json: { success: true }
         else
-          render json: { success: false, errors: "you have unfollowed already" }
+          render json: { success: false, errors: "you have unfollowed already or didn't follow before" }
         end
       end
 

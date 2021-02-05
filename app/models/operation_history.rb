@@ -13,4 +13,13 @@ class OperationHistory < ApplicationRecord
 
   validates :sleep_at, presence: true
   validates :wakeup_at, presence: true, on: :update
+
+  before_save :init_distance_time
+
+  private
+
+  def init_distance_time
+    return unless wakeup_at
+    self.distance_time = wakeup_at - sleep_at
+  end
 end
