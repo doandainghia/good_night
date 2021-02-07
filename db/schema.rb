@@ -12,16 +12,15 @@
 
 ActiveRecord::Schema.define(version: 2021_02_03_140021) do
 
-  create_table "operation_histories", force: :cascade do |t|
-    t.integer "user_id"
+  create_table "operation_histories", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.bigint "user_id"
     t.datetime "wakeup_at"
     t.datetime "sleep_at"
     t.datetime "created_at"
-    t.bigint "length_of_sleep"
     t.index ["user_id"], name: "index_operation_histories_on_user_id"
   end
 
-  create_table "relationships", force: :cascade do |t|
+  create_table "relationships", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.integer "follower_id"
     t.integer "followed_id"
     t.datetime "created_at", null: false
@@ -30,7 +29,7 @@ ActiveRecord::Schema.define(version: 2021_02_03_140021) do
     t.index ["follower_id"], name: "index_relationships_on_follower_id"
   end
 
-  create_table "users", force: :cascade do |t|
+  create_table "users", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "name"
   end
 
