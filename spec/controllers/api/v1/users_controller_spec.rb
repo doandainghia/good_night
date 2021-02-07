@@ -5,7 +5,7 @@ describe Api::V1::UsersController do
   let(:other_user) { FactoryBot.create :user }
   let(:relationship) { FactoryBot.create :relationship, followed: other_user, follower: user }
   let(:last_week_time) { Date.today.at_end_of_week.last_week(:tuesday).end_of_day }
-  let!(:operation_history) { FactoryBot.create :operation_history, user: user, sleep_at: Time.current }
+  let!(:operation_history) { FactoryBot.create :operation_history, user: user}
   let!(:operation_history_last_week1) do
     FactoryBot.create :operation_history, user: other_user, sleep_at: last_week_time,
                       wakeup_at: last_week_time + 1.seconds
@@ -28,14 +28,19 @@ describe Api::V1::UsersController do
     end
 
     context "when user exists" do
+      let!(:operation_history_later) { FactoryBot.create :operation_history, user: user }
       before { get :operation_histories, params: { id: user.id } }
 
       it "returns status code 200" do
         expect(response).to have_http_status(:success)
       end
 
-      it "JSON body response contains expected operation_history" do
-        expect(response.body).to eq({ success: true, data: [OperationHistorySerializer.new(operation_history)] }.to_json)
+      it "JSON body response order by created_at" do
+        ordered_operation_histories = [
+          OperationHistorySerializer.new(operation_history),
+          OperationHistorySerializer.new(operation_history_later)
+        ]
+        expect(response.body).to eq({ success: true, data: ordered_operation_histories }.to_json)
       end
     end
   end
@@ -55,7 +60,7 @@ describe Api::V1::UsersController do
         is_expected.to be_successful
       end
 
-      it "JSON body response contains expected operation_history_last_week" do
+      it "JSON body response order by length_of_sleep" do
         relationship
         subject
         ordered_operation_histories = [
