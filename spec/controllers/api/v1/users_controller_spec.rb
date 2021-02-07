@@ -8,21 +8,22 @@ describe Api::V1::UsersController do
   let(:two_seconds_later) { now + 2.seconds }
   let(:formated_now) { now.strftime("%Y-%m-%d %H:%M:%S") }
   let(:last_week_time) { Date.today.at_end_of_week.last_week(:tuesday).end_of_day }
-  let!(:operation_history) { FactoryBot.create :operation_history, user: user, sleep_at: now }
+  let!(:operation_history) { FactoryBot.create :operation_history, user: user, sleep_at: now, created_at: now }
   let!(:operation_history_last_week) do
     FactoryBot.create :operation_history, user: other_user, sleep_at: last_week_time,
                       wakeup_at: last_week_time + 2.seconds
   end
 
   describe "GET #operation_histories" do
-    it "raise record not found" do
-      get :operation_histories, params: { id: 0 }
-      expect(response.status).to eq(404)
+    context "when send params id of user isn't exist" do
+      it "raise record not found" do
+        get :operation_histories, params: { id: 0 }
+        expect(response.status).to eq(404)
+      end
     end
 
     it "JSON body response contains expected operation_history" do
       get :operation_histories, params: { id: user.id }
-
       json_response = JSON.parse(response.body)
 
       expect(json_response).to eq(
@@ -47,9 +48,11 @@ describe Api::V1::UsersController do
   end
 
   describe "GET #operation_history_of_friends" do
-    it "raise record not found" do
-      get :operation_history_of_friends, params: { id: 0 }
-      expect(response.status).to eq(404)
+    context "when send params id of user isn't exist" do
+      it "raise record not found" do
+        get :operation_history_of_friends, params: { id: 0 }
+        expect(response.status).to eq(404)
+      end
     end
 
     it "JSON body response contains expected operation_history_last_week" do
@@ -106,7 +109,7 @@ describe Api::V1::UsersController do
 
   describe "POST #record_wakeup_at" do
     it "JSON body response contains expected wakeup_at" do
-      allow(Time).to receive(:current).and_return(two_seconds_later)
+      allow(Time).to receive(:current) { two_seconds_later }
       post :record_wakeup_at, params: { id: user.id, operation_history_id: operation_history.id }
       json_response = JSON.parse(response.body)
       operation_history = user.operation_histories.last
