@@ -17,7 +17,7 @@ ActiveRecord::Schema.define(version: 2021_02_03_140021) do
     t.datetime "wakeup_at"
     t.datetime "sleep_at"
     t.datetime "created_at"
-    t.bigint "distance_time"
+    t.bigint "length_of_sleep"
     t.index ["user_id"], name: "index_operation_histories_on_user_id"
   end
 

@@ -30,7 +30,7 @@ describe Api::V1::UsersController do
           "data" => [
             {
               "created_at" => formated_now,
-              "distance_time" => nil,
+              "length_of_sleep" => nil,
               "id" => operation_history.id,
               "sleep_at" => formated_now,
               "user" => {
@@ -63,7 +63,7 @@ describe Api::V1::UsersController do
           "data" => [
             {
               "created_at" => formated_now,
-              "distance_time" => 2,
+              "length_of_sleep" => 2,
               "id" => operation_history_last_week.id,
               "sleep_at" => last_week_time.strftime("%Y-%m-%d %H:%M:%S"),
               "user" => {
@@ -89,7 +89,7 @@ describe Api::V1::UsersController do
         {
           "data" => {
             "created_at" => formated_now,
-            "distance_time" => nil,
+            "length_of_sleep" => nil,
             "id" => operation_history.id,
             "sleep_at" => formated_now,
             "user" => {
@@ -115,7 +115,7 @@ describe Api::V1::UsersController do
         {
           "data" => {
             "created_at" => now.strftime("%Y-%m-%d %H:%M:%S"),
-            "distance_time" => 2,
+            "length_of_sleep" => 2,
             "id" => operation_history.id,
             "sleep_at" => now.strftime("%Y-%m-%d %H:%M:%S"),
             "user" => {
