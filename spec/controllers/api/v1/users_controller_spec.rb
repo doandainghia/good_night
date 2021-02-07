@@ -4,8 +4,6 @@ describe Api::V1::UsersController do
   let(:user) { FactoryBot.create :user }
   let(:other_user) { FactoryBot.create :user }
   let(:relationship) { FactoryBot.create :relationship, followed: other_user, follower: user }
-  let!(:now) { Time.current }
-  let(:two_seconds_later) { now + 2.seconds }
   let(:last_week_time) { Date.today.at_end_of_week.last_week(:tuesday).end_of_day }
   let!(:operation_history) { FactoryBot.create :operation_history, user: user, sleep_at: Time.current }
   let!(:operation_history_last_week1) do
