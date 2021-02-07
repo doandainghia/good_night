@@ -10,7 +10,7 @@ module Api
 
       def operation_history_of_friends
         followed_user_ids = @current_user.followed_user_ids
-        operation_histories = OperationHistory.last_week.by_user_ids(followed_user_ids).order(length_of_sleep: :desc)
+        operation_histories = OperationHistory.last_week.order_by_length_of_sleep(followed_user_ids)
         render_multiple_object true, operation_histories, OperationHistorySerializer
       end
 

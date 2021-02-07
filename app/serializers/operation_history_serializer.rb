@@ -1,5 +1,5 @@
 class OperationHistorySerializer < ActiveModel::Serializer
-  attributes :id, :sleep_at, :wakeup_at, :created_at, :length_of_sleep, :user
+  attributes :id, :sleep_at, :wakeup_at, :created_at, :user
 
   def user
     UserSerializer.new object.user

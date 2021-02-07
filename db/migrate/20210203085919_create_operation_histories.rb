@@ -5,7 +5,6 @@ class CreateOperationHistories < ActiveRecord::Migration[5.2]
       t.datetime :wakeup_at
       t.datetime :sleep_at
       t.datetime :created_at
-      t.bigint :length_of_sleep
     end
   end
 end
